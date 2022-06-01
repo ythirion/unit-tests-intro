@@ -26,7 +26,6 @@ class TimeUtilityTests
     TimeUtility.timeOfDay(clockStub) should be("Night")
   }
 
-
   "at 11 PM" should "be Evening" in {
     (clockStub.time _).when().returns(LocalTime.of(23, 0))
     TimeUtility.timeOfDay(clockStub) should be("Evening")
