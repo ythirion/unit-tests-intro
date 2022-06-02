@@ -11,10 +11,11 @@ Introduction to Unit Tests in scala, java, php, angular and c#
 ![Good vs Bad Tests](img/good-vs-bad.png)
 ![What is a Unit Test](img/what-is-unit-test.png)
 ![Anatomy of Unit Tests](img/anatomy-of-unit-test.png)
-
-// AJOUTER Test Doubles ici
+![Test Doubles](img/test-doubles.png)
 
 ## Concrete Practice - Test it or Die Trying (35')
+
+- ADD EXPLANATIONS IN DIFFERENT LANGUAGES
 
 ```scala
 object TimeUtility {
