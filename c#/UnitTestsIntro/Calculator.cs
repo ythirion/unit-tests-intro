@@ -1,13 +1,13 @@
 ﻿namespace UnitTestsIntro;
 
-public static class Calculator
+public class Calculator
 {
     public const string Add = "add";
     public const string Multiply = "multiply";
     public const string Divide = "divide";
     public const string Subtract = "subtract";
 
-    private static readonly Dictionary<string, Func<int, int, int>> _supportedOperators =
+    private static readonly Dictionary<string, Func<int, int, int>> SupportedOperators =
         new()
         {
             {Add, (a, b) => a + b},
@@ -15,8 +15,8 @@ public static class Calculator
             {Divide, (a, b) => a / b},
             {Subtract, (a, b) => a - b}
         };
-    public static int Calculate(int a, int b, string @operator) =>
-        _supportedOperators.ContainsKey(@operator)
-            ? _supportedOperators[@operator](a, b)
+    public int Calculate(int a, int b, string @operator) =>
+        SupportedOperators.ContainsKey(@operator)
+            ? SupportedOperators[@operator](a, b)
             : throw new ArgumentException("Not supported operator");
 }
