@@ -50,6 +50,8 @@ class TimeUtilityTests
     - Pass a `LocalTime` as method arg
     - Pass a `Clock` which will provide a `time()`method that we will be able to substitute
     - Pas a function `clock: Unit => LocalTime`
+  
+> Never trust a test that you have not seen failed
 
 ## Conclusion - Back to the questions (10')
 Come back to the facts and questions:
