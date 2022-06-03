@@ -32,7 +32,7 @@ public class Calculator
 
 > You are not allowed to change production code
 
-Step-by-step solution is available [here](../solutions/c#/step-by-step.md)
+Step-by-step solution is available [here](../solutions/c%23/step-by-step.md)
 
 ## TimeUtility
 - Write at least one test for it
@@ -62,4 +62,4 @@ public class TimeUtility
 
 > Never trust a test that you have not seen failed
 
-Step-by-step solution is available [here](../solutions/c#/step-by-step.md)
+Step-by-step solution is available [here](../solutions/c%23/step-by-step.md)
