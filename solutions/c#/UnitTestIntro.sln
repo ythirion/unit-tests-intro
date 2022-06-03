@@ -4,6 +4,11 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "UnitTestsIntro.Tests", "Uni
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "UnitTestsIntro", "UnitTestsIntro\UnitTestsIntro.csproj", "{CA5CAA2B-5152-4EEC-AB4C-04EA8CC4B9CA}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Documentation", "Documentation", "{6AFBDA93-1A03-4717-A74C-4F6493C2998C}"
+	ProjectSection(SolutionItems) = preProject
+		step-by-step.md = step-by-step.md
+	EndProjectSection
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU

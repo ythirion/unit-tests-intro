@@ -65,3 +65,5 @@ libraryDependencies += "org.scalamock" %% "scalamock" % "5.1.0" % Test
 ```
 
 > Never trust a test that you have not seen failed
+
+Step-by-step solution is available [here](../solutions/scala/step-by-step.md)

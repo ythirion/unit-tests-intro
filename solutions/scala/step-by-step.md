@@ -181,6 +181,13 @@ class TimeUtilityTests
   }
 }
 ```
+
+- This test is not repeatable because the design is coupled to `LocalTime.now()`
+    - We need to isolate it to be able to test this unitary
+    - A few solutions here :
+        - Pass a `LocalTime` as method arg
+        - Pass a `Clock` which will provide a `time()`method that we will be able to substitute
+        - Pas a function `clock: Unit => LocalTime`
 - Identify some examples
 ```text
 6:05AM -> Morning
@@ -188,15 +195,9 @@ class TimeUtilityTests
 1PM -> Afternoon
 11PM -> Evening
 ```
-- This test is not repeatable because the design is coupled to `LocalTime.now()`
-    - We need to isolate it to be able to test this unitary
-    - A few solutions here :
-        - Pass a `LocalTime` as method arg
-        - Pass a `Clock` which will provide a `time()`method that we will be able to substitute
-        - Pas a function `clock: Unit => LocalTime`
         
 ### Use a Clock trait
-- Adapt the `TimeUtility` to inject a `Clock` trait
+- Adapt the `TimeUtility` to inject a `Clock` collaborator
   - Generate your code from usage
 
 ```scala
