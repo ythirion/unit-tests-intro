@@ -1,17 +1,20 @@
-namespace UnitTestsIntro;
-
-public class TimeUtility
+namespace UnitTestsIntro
 {
-    public string GetTimeOfDay()
+    public class TimeUtility
     {
-        var time = DateTime.Now;
-        
-        return time.Hour switch
+        private readonly IClock _clock;
+
+        public TimeUtility(IClock clock) => _clock = clock;
+
+        public string GetTimeOfDay()
         {
-            >= 0 and < 6 => "Night",
-            >= 6 and < 12 => "Morning",
-            >= 12 and < 18 => "Afternoon",
-            _ => "Evening"
-        };
+            return _clock.Now().Hour switch
+            {
+                >= 0 and < 6 => "Night",
+                >= 6 and < 12 => "Morning",
+                >= 12 and < 18 => "Afternoon",
+                _ => "Evening"
+            };
+        }
     }
 }

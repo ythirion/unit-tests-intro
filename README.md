@@ -44,6 +44,18 @@ class TimeUtilityTests
 }
 ```
 
+```c#
+public class TimeUtilityShould
+{
+    [Fact]
+    public void BeAfternoon() =>
+        new TimeUtility()
+            .GetTimeOfDay()
+            .Should()
+            .Be("Afternoon");
+}
+```
+
 - This test is not repeatable because the design is coupled to `LocalTime.now()`
   - We need to isolate it to be able to test this unitary
   - A few solutions here :

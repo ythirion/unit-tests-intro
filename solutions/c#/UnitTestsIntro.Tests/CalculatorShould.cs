@@ -1,68 +1,69 @@
 using System;
 using Xunit;
 
-namespace UnitTestsIntro.Tests;
-
-public class CalculatorShould
+namespace UnitTestsIntro.Tests
 {
-    [Fact]
-    public void SupportAdd()
+    public class CalculatorShould
     {
-        // Arrange
-        var calculator = new Calculator();
+        [Fact]
+        public void SupportAdd()
+        {
+            // Arrange
+            var calculator = new Calculator();
 
-        // Act
-        var result = calculator.Calculate(9, 3, Calculator.Add);
+            // Act
+            var result = calculator.Calculate(9, 3, Calculator.Add);
 
-        // Assert
-        Assert.Equal(12, result);
-    }
+            // Assert
+            Assert.Equal(12, result);
+        }
 
-    [Fact]
-    public void SupportMultiply()
-    {
-        // Arrange
-        var calculator = new Calculator();
+        [Fact]
+        public void SupportMultiply()
+        {
+            // Arrange
+            var calculator = new Calculator();
 
-        // Act
-        var result = calculator.Calculate(3,76, Calculator.Multiply);
+            // Act
+            var result = calculator.Calculate(3,76, Calculator.Multiply);
 
-        // Assert
-        Assert.Equal(228, result);
-    }
+            // Assert
+            Assert.Equal(228, result);
+        }
     
-    [Fact]
-    public void SupportDivide()
-    {
-        // Arrange
-        var calculator = new Calculator();
+        [Fact]
+        public void SupportDivide()
+        {
+            // Arrange
+            var calculator = new Calculator();
 
-        // Act
-        var result = calculator.Calculate(9,3, Calculator.Divide);
+            // Act
+            var result = calculator.Calculate(9,3, Calculator.Divide);
 
-        // Assert
-        Assert.Equal(3, result);
-    }
+            // Assert
+            Assert.Equal(3, result);
+        }
     
-    [Fact]
-    public void SupportSubtract()
-    {
-        // Arrange
-        var calculator = new Calculator();
+        [Fact]
+        public void SupportSubtract()
+        {
+            // Arrange
+            var calculator = new Calculator();
 
-        // Act
-        var result = calculator.Calculate(9,3, Calculator.Subtract);
+            // Act
+            var result = calculator.Calculate(9,3, Calculator.Subtract);
 
-        // Assert
-        Assert.Equal(6, result);
-    }
+            // Assert
+            Assert.Equal(6, result);
+        }
     
-    [Fact]
-    public void FailWhenOperatorNotSupported()
-    {
-        var calculator = new Calculator();
-        var exception = Assert.Throws<ArgumentException>(() => calculator.Calculate(9, 3, "UnsupportedOperator"));
+        [Fact]
+        public void FailWhenOperatorNotSupported()
+        {
+            var calculator = new Calculator();
+            var exception = Assert.Throws<ArgumentException>(() => calculator.Calculate(9, 3, "UnsupportedOperator"));
         
-        Assert.Equal("Not supported operator", exception.Message);
+            Assert.Equal("Not supported operator", exception.Message);
+        }
     }
 }
