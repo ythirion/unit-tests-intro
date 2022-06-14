@@ -30,3 +30,5 @@ Depuis le dossier php du projet (Lance uniquement la classe BlogTests) :
 ```%USERPROFILE%\scoop\apps\laragon\current\bin\php\php-8.0.10-nts\php.exe vendor\phpunit\phpunit\phpunit tests\Antipatterns\BlogTests.php```
 
 C:\Users\SSJ\scoop\apps\laragon\current\bin\php\php-8.0.10-nts\php.exe C:\Users\SSJ\scoop\apps\laragon\current\bin\composer\composer.phar install
+
+C:\Users\SSJ\scoop\apps\laragon\current\bin\php\php-8.0.10-nts\php.exe vendor\phpunit\phpunit\phpunit tests\CalculatorTests.php

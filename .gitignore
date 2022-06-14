@@ -12,3 +12,6 @@ target/
 .vscode
 .metals
 .DS_Store
+
+php/vendor
+solutions/php/vendor
