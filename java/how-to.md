@@ -61,7 +61,7 @@ Step-by-step solution is available [here](../solutions/java/step-by-step.md)
 ```java
 public class TimeUtility {
     public String getTimeOfDay() {
-        var time = LocalTime.now();
+        var time = now();
 
         if (time.getHour() < 6) {
             return "Night";
@@ -70,7 +70,7 @@ public class TimeUtility {
         } else if (time.getHour() < 18) {
             return "Afternoon";
         }
-        return "Night";
+        return "Evening";
     }
 }
 ```

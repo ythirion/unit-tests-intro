@@ -1,10 +1,10 @@
 package unit.tests.intro;
 
-import java.time.LocalTime;
+import static java.time.LocalTime.now;
 
 public class TimeUtility {
     public String getTimeOfDay() {
-        var time = LocalTime.now();
+        var time = now();
 
         if (time.getHour() < 6) {
             return "Night";
@@ -13,6 +13,6 @@ public class TimeUtility {
         } else if (time.getHour() < 18) {
             return "Afternoon";
         }
-        return "Night";
+        return "Evening";
     }
 }

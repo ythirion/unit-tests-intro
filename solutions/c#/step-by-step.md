@@ -178,9 +178,9 @@ public class TimeUtilityShould
 - This test is not repeatable because the design is coupled to `LocalTime.now()`
     - We need to isolate it to be able to test this unitary
     - A few solutions here :
-        - Pass a `LocalTime` as method arg
-        - Pass a `Clock` which will provide a `time()`method that we will be able to substitute
-        - Pass a function `clock: Unit => LocalTime`
+        - Pass a `DateTime` as method arg
+        - Pass a `IClock` which will provide a `Now()`method that we will be able to substitute
+        - Pass a function `clock: void => DateTime`
 
 - Identify some examples
 ```text

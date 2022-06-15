@@ -169,14 +169,12 @@ public class TimeUtility {
 - Here is the simplest test we can write
   - Which problem will you encounter?
 ```java
-public class TimeUtilityShould
-{
-    [Fact]
-    public void BeAfternoon() =>
-        new TimeUtility()
-            .GetTimeOfDay()
-            .Should()
-            .Be("Afternoon");
+class TimeUtilityTests {
+    @Test
+    void it_should_be_afternoon() {
+        assertThat(new TimeUtility().getTimeOfDay())
+                .isEqualTo("Afternoon");
+    }
 }
 ```
 
@@ -200,51 +198,49 @@ public class TimeUtilityShould
   - Generate your code from usage
 
 ```java
-public class TimeUtility
-{
-    private readonly IClock _clock;
+public class TimeUtility {
+    private final Clock clock;
 
-    public TimeUtility(IClock clock) => _clock = clock;
+    public TimeUtility(Clock clock) {
+        this.clock = clock;
+    }
 
-    public string GetTimeOfDay()
-    {
-        return _clock.Now().Hour switch
-        {
-            >= 0 and < 6 => "Night",
-            >= 6 and < 12 => "Morning",
-            >= 12 and < 18 => "Afternoon",
-            _ => "Evening"
-        };
+    public String getTimeOfDay() {
+        var time = clock.now();
+
+        if (time.getHour() < 6) {
+            return "Night";
+        } else if (time.getHour() < 12) {
+            return "Morning";
+        } else if (time.getHour() < 18) {
+            return "Afternoon";
+        }
+        return "Evening";
     }
 }
 
-public interface IClock
-{
-    DateTime Now();
+public interface Clock {
+    LocalTime now();
 }
 ```
 
 - Now our code has no `hardcoded` dependency anymore
 - We need to adapt our tests
-  - How to provide a `IClock` in the given state for our test cases?
+  - How to provide a `Clock` in the given state for our test cases?
   - `Test Doubles` is our solution
 
-- To use TestDoubles we need to use `moq`
-  - Instantiate a `IClock` mock
+- To use TestDoubles can use `mockito`
+  - Instantiate a `Clock` mock
   - We implement our first test case
 
 ```java
-[Fact]
-public void ReturnMorningFor6AM()
-{
-    var clockMock = new Mock<IClock>();
-    clockMock.Setup(c => c.Now())
-        .Returns(new DateTime(2022, 12, 1, 6, 5, 0, 0));
-    
-    new TimeUtility(clockMock.Object)
-        .GetTimeOfDay()
-        .Should()
-        .Be("Morning");
+@Test
+void it_should_return_Morning_for_6am() {
+    var clockMock = mock(Clock.class);
+    when(clockMock.now()).thenReturn(LocalTime.of(6, 5));
+
+    assertThat(new TimeUtility(clockMock).getTimeOfDay())
+            .isEqualTo("Morning");
 }
 ```
 
@@ -255,48 +251,33 @@ public void ReturnMorningFor6AM()
 11PM -> Evening
 ```
 
-- Implement others by using a `Theory` once again
+- Implement others by using a `Parameterized Test` once again
 ```java
-public class TimeUtilityShould
-{
-    [Theory]
-    [InlineData(0, "Night")]
-    [InlineData(4, "Night")]
-    [InlineData(6, "Morning")]
-    [InlineData(9, "Morning")]
-    [InlineData(12, "Afternoon")]
-    [InlineData(17, "Afternoon")]
-    [InlineData(18, "Evening")]
-    [InlineData(23, "Evening")]
-    public void GetADescriptionAtAnyTime(int hour, string expectedDescription)
-    {
-        var clockMock = new Mock<IClock>();
-        clockMock.Setup(c => c.Now())
-            .Returns(hour.ToDateTime());
-        
-        new TimeUtility(clockMock.Object)
-            .GetTimeOfDay()
-            .Should()
-            .Be(expectedDescription);
-    }
-    
-    [Fact]
-    public void ReturnMorningFor6AM()
-    {
-        var clockMock = new Mock<IClock>();
-        clockMock.Setup(c => c.Now())
-            .Returns(new DateTime(2022, 12, 1, 6, 5, 0, 0));
-        
-        new TimeUtility(clockMock.Object)
-            .GetTimeOfDay()
-            .Should()
-            .Be("Morning");
-    }
-}
+class TimeUtilityTests {
+    @ParameterizedTest
+    @MethodSource("timeTestCases")
+    void supportOperations(int hour, String expectedDescription) {
+        var clockMock = mock(Clock.class);
+        when(clockMock.now()).thenReturn(LocalTime.of(hour, 0));
 
-internal static class TestExtensions
-{
-    public static DateTime ToDateTime(this int hour) 
-        => new(2022, 12, 1, hour, 0, 0, 0);
+        assertThat(
+                new TimeUtility(clockMock)
+                        .getTimeOfDay()
+        ).isEqualTo(expectedDescription);
+    }
+
+    private static Stream<Arguments> timeTestCases() {
+        return Stream.of(
+                Arguments.of(0, "Night"),
+                Arguments.of(0, "Night"),
+                Arguments.of(4, "Night"),
+                Arguments.of(6, "Morning"),
+                Arguments.of(9, "Morning"),
+                Arguments.of(12, "Afternoon"),
+                Arguments.of(17, "Afternoon"),
+                Arguments.of(18, "Evening"),
+                Arguments.of(23, "Evening")
+        );
+    }
 }
 ```
