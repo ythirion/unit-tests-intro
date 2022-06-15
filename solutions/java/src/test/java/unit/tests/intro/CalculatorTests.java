@@ -1,8 +1,9 @@
+package unit.tests.intro;
+
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
-import unit.tests.intro.Calculator;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
 class CalculatorTests {
     @Test

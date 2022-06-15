@@ -1,7 +1,7 @@
 # Step-by-step - Test it or Die Trying (35')
 ## Calculator
 - We start by a first simple test case : `9 + 3 = 12`
-  - We create a `CalculatorTests` class
+  - We create a `unit.tests.intro.CalculatorTests` class
   - We use the `3A` pattern to describe it
   - We assert the expected result
 
@@ -107,7 +107,7 @@ void failWhenOperatorNotSupported() {
 - We can use a library that simplify assertion readability as well called [assertJ](https://assertj.github.io/doc/)
 
 ```java
-class RefactoredCalculatorTests {
+class unit.tests.intro.RefactoredCalculatorTests {
     private final Calculator calculator = new Calculator();
 
     @ParameterizedTest
@@ -150,19 +150,18 @@ Divide by 0 should fail
 - Write at least one test for it
 
 ```java
-public class TimeUtility
-{
-    public string GetTimeOfDay()
-    {
-        var time = DateTime.Now;
+public class TimeUtility {
+    public String getTimeOfDay() {
+        var time = LocalTime.now();
 
-        return time.Hour switch
-        {
-            >= 0 and < 6 => "Night",
-            >= 6 and < 12 => "Morning",
-            >= 12 and < 18 => "Afternoon",
-            _ => "Evening"
+        if (time.getHour() < 6) {
+            return "Night";
+        } else if (time.getHour() < 12) {
+            return "Morning";
+        } else if (time.getHour() < 18) {
+            return "Afternoon";
         }
+        return "Night";
     }
 }
 ```
