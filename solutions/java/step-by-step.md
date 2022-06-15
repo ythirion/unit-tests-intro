@@ -7,8 +7,7 @@
 
 ```java
 @Test
-void supportAdd()
-{
+void supportAdd() {
     // Arrange
     var calculator = new Calculator();
 
@@ -31,8 +30,7 @@ Unsupported operator should fail
 - Other test cases
 ```java
 @Test
-void supportMultiply()
-{
+void supportMultiply() {
     // Arrange
     var calculator = new Calculator();
 
@@ -44,8 +42,7 @@ void supportMultiply()
 }
 
 @Test
-void supportDivide()
-{
+void supportDivide() {
     // Arrange
     var calculator = new Calculator();
 
@@ -57,8 +54,7 @@ void supportDivide()
 }
 
 @Test
-void supportSubtract()
-{
+void supportSubtract() {
     // Arrange
     var calculator = new Calculator();
 
@@ -81,8 +77,7 @@ Unsupported operator should fail
 - Let's implement the failure test
 ```java
 @Test
-void failWhenOperatorNotSupported()
-{
+void failWhenOperatorNotSupported() {
     var calculator = new Calculator();
     var exception = Assertions.assertThrows(IllegalArgumentException.class, () -> calculator.calculate(9, 3, "UnsupportedOperator"));
     assertEquals("Not supported operator", exception.getMessage());
@@ -96,39 +91,46 @@ void failWhenOperatorNotSupported()
   - assertion code is duplicated
   - we instantiate 1 `Calculator` per test, but we can use the same (no state inside)
 - In `junit` for this kind of test we can use `Parameterized tests`
-  - We define a `[Theory]` method that takes some data as input `[InlineData]`
-  - We adapt the test method as well `public void SupportOperations(int a, int b, string @operator, int expectedResult)`
+  - We need to add a new dependency for that 
+
+```xml
+<dependency>
+    <groupId>org.junit.jupiter</groupId>
+    <artifactId>junit-jupiter-params</artifactId>
+    <version>${junit.version}</version>
+    <scope>test</scope>
+</dependency>
+```
+- We then define a Parameterized test using the dedicated annotation `@ParameterizedTest`
+  - We need to supply data to it, we use `@MethodSource`
+  - We then adapt the test method as well to take arguments `void supportOperations(int a, int b, String operator, int expectedResult)`
 - We can use a library that simplify assertion readability as well called [assertJ](https://assertj.github.io/doc/)
 
 ```java
-public class RefactoredCalculatorShould
-{
-    private readonly Calculator _calculator;
+class RefactoredCalculatorTests {
+    private final Calculator calculator = new Calculator();
 
-    public RefactoredCalculatorShould()
-    {
-        _calculator = new Calculator();
+    @ParameterizedTest
+    @MethodSource("supportedOperatorsTestCases")
+    void supportOperations(int a, int b, String operator, int expectedResult) {
+        assertThat(calculator.calculate(a, b, operator))
+                .isEqualTo(expectedResult);
     }
 
-    [Theory]
-    [InlineData(9, 3, Add, 12)]
-    [InlineData(3, 76, Multiply, 228)]
-    [InlineData(9, 3, Divide, 3)]
-    [InlineData(9, 3, Subtract, 6)]
-    public void SupportOperations(int a, int b, string @operator, int expectedResult) =>
-        _calculator
-            .Calculate(a, b, @operator)
-            .Should()
-            .Be(expectedResult);
+    @Test
+    void failWhenOperatorNotSupported() {
+        assertThatThrownBy(() -> calculator.calculate(9, 3, "UnsupportedOperator"))
+                .isInstanceOf(IllegalArgumentException.class)
+                .hasMessage("Not supported operator");
+    }
 
-    [Fact]
-    public void FailWhenOperatorNotSupported()
-    {
-        var calculate = () => _calculator.Calculate(9, 3, "UnsupportedOperator");
-    
-        calculate.Should()
-            .Throw<ArgumentException>()
-            .WithMessage("Not supported operator");
+    private static Stream<Arguments> supportedOperatorsTestCases() {
+        return Stream.of(
+                Arguments.of(9, 3, ADD, 12),
+                Arguments.of(3, 76, MULTIPLY, 228),
+                Arguments.of(9, 3, DIVIDE, 3),
+                Arguments.of(9, 3, SUBTRACT, 6)
+        );
     }
 }
 ```

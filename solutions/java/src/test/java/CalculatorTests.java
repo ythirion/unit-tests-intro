@@ -6,8 +6,7 @@ import static org.junit.jupiter.api.Assertions.*;
 
 class CalculatorTests {
     @Test
-    void supportAdd()
-    {
+    void supportAdd() {
         // Arrange
         var calculator = new Calculator();
 
@@ -20,8 +19,7 @@ class CalculatorTests {
 
 
     @Test
-    void supportMultiply()
-    {
+    void supportMultiply() {
         // Arrange
         var calculator = new Calculator();
 
@@ -33,8 +31,7 @@ class CalculatorTests {
     }
 
     @Test
-    void supportDivide()
-    {
+    void supportDivide() {
         // Arrange
         var calculator = new Calculator();
 
@@ -46,8 +43,7 @@ class CalculatorTests {
     }
 
     @Test
-    void supportSubtract()
-    {
+    void supportSubtract() {
         // Arrange
         var calculator = new Calculator();
 
@@ -59,8 +55,7 @@ class CalculatorTests {
     }
 
     @Test
-    void failWhenOperatorNotSupported()
-    {
+    void failWhenOperatorNotSupported() {
         var calculator = new Calculator();
         var exception = Assertions.assertThrows(IllegalArgumentException.class, () -> calculator.calculate(9, 3, "UnsupportedOperator"));
         assertEquals("Not supported operator", exception.getMessage());

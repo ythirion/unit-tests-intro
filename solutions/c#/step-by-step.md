@@ -107,12 +107,7 @@ public void FailWhenOperatorNotSupported()
 ```c#
 public class RefactoredCalculatorShould
 {
-    private readonly Calculator _calculator;
-
-    public RefactoredCalculatorShould()
-    {
-        _calculator = new Calculator();
-    }
+    private readonly Calculator _calculator = new();
 
     [Theory]
     [InlineData(9, 3, Add, 12)]
@@ -126,14 +121,11 @@ public class RefactoredCalculatorShould
             .Be(expectedResult);
 
     [Fact]
-    public void FailWhenOperatorNotSupported()
-    {
-        var calculate = () => _calculator.Calculate(9, 3, "UnsupportedOperator");
-    
-        calculate.Should()
+    public void FailWhenOperatorNotSupported() =>
+        _calculator.Invoking(_ => _.Calculate(9, 3, "UnsupportedOperator"))
+            .Should()
             .Throw<ArgumentException>()
             .WithMessage("Not supported operator");
-    }
 }
 ```
 
