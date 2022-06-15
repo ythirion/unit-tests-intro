@@ -1,33 +1,41 @@
+import TimeUtilityTests.testCases
 import org.scalamock.scalatest.MockFactory
 import org.scalatest.flatspec.AnyFlatSpec
 import org.scalatest.matchers.should.Matchers
+import org.scalatest.prop.TableDrivenPropertyChecks
+import org.scalatest.prop.Tables.Table
 
 import java.time.LocalTime
 
 class TimeUtilityTests
   extends AnyFlatSpec
     with Matchers
-    with MockFactory {
+    with MockFactory
+    with TableDrivenPropertyChecks {
 
-  private val clockStub: Clock = stub[Clock]
+  "TimeUtility" should "return a description at any time" in {
+    forAll(testCases) {
+      (hour, expectedDescription) =>
+        val clockStub: Clock = stub[Clock]
+        (clockStub.time _).when().returns(LocalTime.of(hour, 0))
 
-  "at 6 AM" should "be Morning" in {
-    (clockStub.time _).when().returns(LocalTime.of(6, 5))
-    TimeUtility.timeOfDay(clockStub) should be("Morning")
+        TimeUtility.timeOfDay(clockStub) should be(expectedDescription)
+    }
   }
+}
 
-  "at 1 PM" should "be Afternoon" in {
-    (clockStub.time _).when().returns(LocalTime.of(13, 0))
-    TimeUtility.timeOfDay(clockStub) should be("Afternoon")
-  }
-
-  "at 2 AM" should "be Night" in {
-    (clockStub.time _).when().returns(LocalTime.of(1, 0))
-    TimeUtility.timeOfDay(clockStub) should be("Night")
-  }
-
-  "at 11 PM" should "be Evening" in {
-    (clockStub.time _).when().returns(LocalTime.of(23, 0))
-    TimeUtility.timeOfDay(clockStub) should be("Evening")
-  }
+object TimeUtilityTests {
+  private val testCases =
+    Table(
+      ("hour", "expectedDescription"),
+      (0, "Night"),
+      (0, "Night"),
+      (4, "Night"),
+      (6, "Morning"),
+      (9, "Morning"),
+      (12, "Afternoon"),
+      (17, "Afternoon"),
+      (18, "Evening"),
+      (23, "Evening")
+    )
 }
