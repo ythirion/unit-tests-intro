@@ -58,7 +58,7 @@ public class TimeUtility
 
 - You can use `moq` as `TestDouble` library
   - `moq` documentation is available [here](https://moq.github.io/moq4/)
-  - You need to qdd the package dependency in your test project
+  - You need to add the package dependency in your test project
 
 > Never trust a test that you have not seen failed
 

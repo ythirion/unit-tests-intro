@@ -15,6 +15,7 @@ Introduction to Unit Tests in scala, java, php, angular and c#
 
 ## Concrete Practice - Test it or Die Trying (35')
 - [scala](scala/how-to.md)
+- [java](java/how-to.md)
 - [C#](c%23/how-to.md)
 
 ## Conclusion - Back to the questions (10')
