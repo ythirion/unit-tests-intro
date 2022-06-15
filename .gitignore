@@ -366,3 +366,11 @@ target/
 
 # Stryker
 StrykerOutput
+
+.vscode
+.metals
+.DS_Store
+
+# PHP
+php/vendor
+solutions/php/vendor
