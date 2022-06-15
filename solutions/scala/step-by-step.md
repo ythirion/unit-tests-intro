@@ -94,40 +94,31 @@ Unsupported operator should fail
 - Let's remove duplication
   - assertion code is duplicated
   - we instantiate 1 `Calculator` per test, but we can use the same (no state inside)
+- In `scalatest` for this kind of test we can use `Parameterized tests`
+  - We use `TableDrivenPropertyChecks` trait for that  (`forAll`)
+    - Documentation available [here](https://www.scalatest.org/user_guide/table_driven_property_checks)
+  - We define a `Table` that hosts our test cases
+  - We adapt the test method as well to deal with this table and make assertions on each row
 
 ```scala
 class RefactoredCalculatorTests
-  extends AnyFunSuite {
+  extends AnyFunSuite
+    with TableDrivenPropertyChecks {
 
   private val calculator = new Calculator()
 
-  test("calculator should support add") {
-    assertSuccess(
-      calculator
-        .calculate(9, 3, operator = Calculator.add),
-      12)
+  test("calculator should support supplied operators") {
+    forAll(testCases) {
+      (a, b, operator, expectedResult) =>
+        assertSuccess(calculator.calculate(a, b, operator), expectedResult)
+    }
   }
 
-  test("calculator should support multiply") {
-    assertSuccess(calculator
-      .calculate(3, 76, operator = Calculator.multiply),
-      228)
-  }
-
-  test("calculator should support divide") {
-    assertSuccess(
-      calculator
-        .calculate(9, 3, operator = Calculator.divide),
-      3)
-  }
-
-  test("calculator should support subtract") {
-    assertSuccess(calculator
-      .calculate(9, 3, operator = Calculator.subtract),
-      6)
-  }
+  private def assertSuccess(result: Try[Int], expectedValue: Int): Assertion =
+    assert(result.success.value == expectedValue)
 
   test("calculator should fail when operator not supported") {
+    val calculator = new Calculator()
     assert(
       calculator
         .calculate(9, 3, operator = "UnsupportedOperator")
@@ -136,8 +127,17 @@ class RefactoredCalculatorTests
         .getMessage == "Not supported operator"
     )
   }
+}
 
-  private def assertSuccess(result: Try[Int], expectedValue: Int): Assertion = assert(result.success.value == expectedValue)
+object RefactoredCalculatorTests {
+  private val testCases =
+    Table(
+      ("a", "b", "operator", "expectedResult"),
+      (9, 3, add, 12),
+      (3, 76, multiply, 228),
+      (9, 3, divide, 3),
+      (9, 3, subtract, 6)
+    )
 }
 ```
 

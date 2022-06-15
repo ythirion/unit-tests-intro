@@ -1,42 +1,31 @@
+import Calculator._
+import RefactoredCalculatorTests.testCases
 import org.scalatest.Assertion
 import org.scalatest.TryValues.convertTryToSuccessOrFailure
 import org.scalatest.funsuite.AnyFunSuite
-import org.scalatest.matchers.should.Matchers
+import org.scalatest.prop.TableDrivenPropertyChecks
+import org.scalatest.prop.Tables.Table
 
 import scala.util.Try
 
 class RefactoredCalculatorTests
-  extends AnyFunSuite {
+  extends AnyFunSuite
+    with TableDrivenPropertyChecks {
 
   private val calculator = new Calculator()
 
-  test("calculator should support add") {
-    assertSuccess(
-      calculator
-        .calculate(9, 3, operator = Calculator.add),
-      12)
+  test("calculator should support supplied operators") {
+    forAll(testCases) {
+      (a, b, operator, expectedResult) =>
+        assertSuccess(calculator.calculate(a, b, operator), expectedResult)
+    }
   }
 
-  test("calculator should support multiply") {
-    assertSuccess(calculator
-      .calculate(3, 76, operator = Calculator.multiply),
-      228)
-  }
-
-  test("calculator should support divide") {
-    assertSuccess(
-      calculator
-        .calculate(9, 3, operator = Calculator.divide),
-      3)
-  }
-
-  test("calculator should support subtract") {
-    assertSuccess(calculator
-      .calculate(9, 3, operator = Calculator.subtract),
-      6)
-  }
+  private def assertSuccess(result: Try[Int], expectedValue: Int): Assertion =
+    assert(result.success.value == expectedValue)
 
   test("calculator should fail when operator not supported") {
+    val calculator = new Calculator()
     assert(
       calculator
         .calculate(9, 3, operator = "UnsupportedOperator")
@@ -45,6 +34,15 @@ class RefactoredCalculatorTests
         .getMessage == "Not supported operator"
     )
   }
+}
 
-  private def assertSuccess(result: Try[Int], expectedValue: Int): Assertion = assert(result.success.value == expectedValue)
+object RefactoredCalculatorTests {
+  private val testCases =
+    Table(
+      ("a", "b", "operator", "expectedResult"),
+      (9, 3, add, 12),
+      (3, 76, multiply, 228),
+      (9, 3, divide, 3),
+      (9, 3, subtract, 6)
+    )
 }

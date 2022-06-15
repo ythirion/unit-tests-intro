@@ -1,6 +1,6 @@
+import Calculator._
 import org.scalatest.TryValues.convertTryToSuccessOrFailure
 import org.scalatest.funsuite.AnyFunSuite
-import org.scalatest.matchers.should.Matchers
 
 class CalculatorTests
   extends AnyFunSuite {
@@ -10,7 +10,7 @@ class CalculatorTests
     val calculator = new Calculator()
 
     // Act
-    val result = calculator.calculate(9, 3, operator = Calculator.add)
+    val result = calculator.calculate(9, 3, add)
 
     // Assert
     assert(result.success.value == 12)
@@ -21,7 +21,7 @@ class CalculatorTests
     val calculator = new Calculator()
 
     // Act
-    val result = calculator.calculate(3, 76, operator = Calculator.multiply)
+    val result = calculator.calculate(3, 76, multiply)
 
     // Assert
     assert(result.success.value == 228)
@@ -32,7 +32,7 @@ class CalculatorTests
     val calculator = new Calculator()
 
     // Act
-    val result = calculator.calculate(9, 3, operator = Calculator.divide)
+    val result = calculator.calculate(9, 3, divide)
 
     // Assert
     assert(result.success.value == 3)
@@ -43,7 +43,7 @@ class CalculatorTests
     val calculator = new Calculator()
 
     // Act
-    val result = calculator.calculate(9, 3, operator = Calculator.subtract)
+    val result = calculator.calculate(9, 3, subtract)
 
     // Assert
     assert(result.success.value == 6)
