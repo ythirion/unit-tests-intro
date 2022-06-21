@@ -17,7 +17,6 @@ let calculate a b op =
     | Operators.Multiply -> a * b
     | Operators.Divide -> a / b
     | Operators.Subtract -> a - b
-    | _ -> 0
 
 [<Fact>]
 let ``My test`` () =
@@ -29,6 +28,11 @@ let ``just trying shit out`` () =
     Assert.False(calculate 1 1 Operators.Add = 3)
     Assert.True(calculate 1 2 Operators.Multiply = 2)
     Assert.False(calculate 2 2 Operators.Multiply = 8)
+    Assert.Throws<DivideByZeroException>(fun () -> calculate 2 0 Operators.Divide = 0 |> ignore)
+    
+    
+    
+    
     
     
     
