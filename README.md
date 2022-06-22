@@ -20,5 +20,5 @@ Introduction to Unit Tests in scala, java, php, angular and c#
 
 ## Conclusion - Back to the questions (10')
 Come back to the facts and questions:
-- Are you able to your questions now? 
+- Are you able to answer your questions now? 
 - Review your facts and update any you have learnt more about now
