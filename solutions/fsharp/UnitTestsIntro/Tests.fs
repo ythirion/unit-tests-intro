@@ -1,22 +1,7 @@
 module Tests
 open System
 open Xunit
-
-
-let add a b = a + b
-
-type Operators =
-    | Add
-    | Multiply
-    | Divide
-    | Subtract
-
-let calculate a b op =
-    match op with
-    | Operators.Add -> a + b
-    | Operators.Multiply -> a * b
-    | Operators.Divide -> a / b
-    | Operators.Subtract -> a - b
+open Program
 
 [<Fact>]
 let ``My test`` () =
