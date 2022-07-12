@@ -2,7 +2,7 @@
 Introduction to Unit Tests in `scala`, `java`, `php`, `angular` and `c#
 
 ## Connection - Three Facts and a Question (10')
-- In pairs, take 2 minutes to come up with three facts about `Unit Testing` and 1 question you have about it
+- In pairs, take 2 minutes to come up with 3 facts about `Unit Testing` and 1 question you have about it
   - Collate all the facts from all the pairs into one list 
 - Come back to the facts and questions in the `conclusions` part if not before
 
