@@ -13,7 +13,7 @@ Introduction to Unit Tests in scala, java, php, angular and c#
 ![Anatomy of Unit Tests](img/anatomy-of-unit-test.png)
 ![Test Doubles](img/test-doubles.png)
 
-## Concrete Practice - Test it or Die Trying (35')
+## Concrete Practice - Test it or Die Trying (60')
 - [scala](scala/how-to.md)
 - [java](java/how-to.md)
 - [C#](c%23/how-to.md)
